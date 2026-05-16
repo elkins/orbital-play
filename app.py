@@ -99,7 +99,7 @@ Blue: Positive phase (+)
 Red: Negative phase (-)
 """)
 
-st.sidebar.caption("OrbitalPlay v0.1")
+st.sidebar.caption("OrbitalPlay v0.1.1")
 
 # Run calculation
 with st.spinner("Calculating orbitals..."):
