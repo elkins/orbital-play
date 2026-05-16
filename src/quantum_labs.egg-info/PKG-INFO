@@ -3,8 +3,8 @@ Name: quantum-labs
 Version: 0.1.0
 Summary: Interactive Molecular Orbital Education
 Author-email: George Elkins <george@example.com>
-Project-URL: Homepage, https://github.com/yourusername/quantum-labs
-Project-URL: Bug Tracker, https://github.com/yourusername/quantum-labs/issues
+Project-URL: Homepage, https://github.com/elkins/quantum-labs
+Project-URL: Bug Tracker, https://github.com/elkins/quantum-labs/issues
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent

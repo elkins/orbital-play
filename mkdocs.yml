@@ -1,6 +1,7 @@
 site_name: OrbitalPlay Docs
 theme:
   name: material
+  custom_dir: docs/overrides
   palette:
     primary: indigo
     accent: indigo
@@ -29,3 +30,6 @@ extra_javascript:
   - javascripts/mathjax.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra:
+  google_site_verification: google7f0d84bcdb02d19b
