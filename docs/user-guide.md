@@ -69,3 +69,9 @@ The **Quantum Movie** allows you to see electrons in motion.
 - **The Science:** Real-world electronic transitions aren't instant; they involve the "sloshing" of electron density. We use **Time-Dependent Hartree-Fock (TDHF)** to compute the first excited state and visualize the resulting dynamic density.
 - **The Interaction:** Enable the movie in the sidebar. Use the **Movie Frame (Time)** slider to scrub through the animation.
 - **What to look for:** A purple cloud representing the total electron density will appear. As you move the slider, you will see this density flow back and forth across the molecule—this is the fundamental motion of a quantum transition.
+
+### 6. The Multiverse Dial
+The **Multiverse Dial** lets you warp the fundamental laws of physics.
+- **The Science:** By adjusting the **Physics Strength ($\lambda$)**, you are effectively changing the mass of the electron or the strength of electricity.
+- **The Interaction:** Enable the dial in the sidebar. Use the slider to increase $\lambda$ (Strong Universe) or decrease it (Weak Universe).
+- **What to look for:** Watch the **size** of the entire molecule. In a "Strong Universe," the orbitals and atoms will physically **shrink and collapse**. In a "Weak Universe," they will expand and become more diffuse.

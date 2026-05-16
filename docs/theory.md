@@ -67,6 +67,14 @@ Traditionally, chemistry is taught using stationary orbitals (the time-independe
 
 In **The Attosecond Movie**, we visualize the **Total Electron Density** $\rho(r, t)$. This is done by simulating a coherent superposition of the ground state and the first excited state (calculated via Time-Dependent Hartree-Fock, or TDHF). As the phase of the excited state changes over time, the electron density physically "sloshes" back and forth across the molecule, demonstrating the dynamic nature of chemical transitions.
 
+### 5. Coordinate Scaling (The Multiverse Dial)
+Chemistry is a delicate balance of physical constants. In **The Multiverse Dial**, we warp the "Strength of Physics" ($\lambda$) by simulating a universe where fundamental constants like the electron mass ($m_e$) are scaled.
+
+In atomic units, scaling the electron mass $m_e \to \lambda m_e$ is equivalent to a global spatial contraction:
+\\[ r \to r / \lambda \\]
+
+As you increase $\lambda$ (the "Strength" of the universe), the Bohr radius $a_0$ shrinks, and the electrons are pulled much closer to the nucleus. This results in the entire molecule physically **collapsing** into a smaller volume while the binding energy increases by a factor of $\lambda$. This feature allows you to visualize how matter itself would look in an alternate reality with different laws of physics.
+
 ## Molecular Orbitals (MOs)
 
 Molecular orbitals (MOs) are mathematical functions that describe the location and wave-like behavior of an electron in a molecule. 

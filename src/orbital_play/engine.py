@@ -37,14 +37,29 @@ def generate_geometry(molecule_type, **kwargs):
     else:
         raise ValueError(f"Unsupported molecule type: {molecule_type}")
 
-def run_calculation(geometry_str, basis='sto-3g', spin=0, wand_coords=None, wand_charge=0.0, alchemist_delta=0.0):
+def run_calculation(geometry_str, basis='sto-3g', spin=0, wand_coords=None, wand_charge=0.0, alchemist_delta=0.0, physics_scale=1.0):
     """
     Runs a Restricted or Unrestricted Hartree-Fock calculation with optional external point charges.
     spin: 2S = N_alpha - N_beta
     wand_coords: (x, y, z) tuple in Angstroms
     wand_charge: float
     alchemist_delta: float - Added charge to the first nucleus in the molecule.
+    physics_scale: float - Scaling factor for physical constants (e.g. electron mass).
     """
+    # 0. The Multiverse Dial: Scale coordinates by 1/lambda
+    # This is equivalent to scaling the electron mass by lambda.
+    if abs(physics_scale - 1.0) > 1e-6:
+        lines = geometry_str.strip().split(';')
+        scaled_lines = []
+        for line in lines:
+            parts = line.strip().split()
+            if not parts: continue
+            symbol = parts[0]
+            # Scale coordinates by 1/physics_scale
+            coords = [float(p) / physics_scale for p in parts[1:]]
+            scaled_lines.append(f"{symbol} {' '.join(map(str, coords))}")
+        geometry_str = '; '.join(scaled_lines)
+
     mol = gto.M(atom=geometry_str, basis=basis, unit='Angstrom', spin=spin)
     if spin == 0:
         mf = scf.RHF(mol)
@@ -194,20 +209,20 @@ def generate_cube_string(mol, mf, mo_index, spin_type='alpha', nx=40, ny=40, nz=
             
     return cube_data
 
-def get_molecule_summary(mol, mf, alchemist_delta=0.0):
+def get_molecule_summary(mol, mf, alchemist_delta=0.0, physics_scale=1.0):
     """Returns a summary of the calculation results."""
     # Check if RHF or UHF
     # mo_energy: RHF is (n_mo,), UHF is (2, n_mo)
     if mf.mo_energy.ndim == 1:
         # RHF
-        mo_energies = mf.mo_energy.tolist()
+        mo_energies = (mf.mo_energy * physics_scale).tolist()
         mo_occ = mf.mo_occ.tolist()
         n_mo = len(mf.mo_energy)
     else:
         # UHF - Return a dict with alpha and beta
         mo_energies = {
-            'alpha': mf.mo_energy[0].tolist(),
-            'beta': mf.mo_energy[1].tolist()
+            'alpha': (mf.mo_energy[0] * physics_scale).tolist(),
+            'beta': (mf.mo_energy[1] * physics_scale).tolist()
         }
         mo_occ = {
             'alpha': mf.mo_occ[0].tolist(),
@@ -215,7 +230,7 @@ def get_molecule_summary(mol, mf, alchemist_delta=0.0):
         }
         n_mo = len(mf.mo_energy[0])
 
-    energy = mf.e_tot
+    energy = mf.e_tot * physics_scale
     
     # Energy Correction for Alchemist's Dial
     # We must subtract the unphysical repulsion between the host nucleus 

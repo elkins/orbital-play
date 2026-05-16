@@ -83,3 +83,12 @@ def test_get_attosecond_frames():
     assert len(frames) == 3
     assert "PySCF" in frames[0]
     assert "density" in frames[0]
+
+def test_physics_scale():
+    geometry = "H 0 0 0; H 0 0 0.74"
+    # Strong universe (lambda=2)
+    mol, mf = engine.run_calculation(geometry, physics_scale=2.0)
+    summary = engine.get_molecule_summary(mol, mf, physics_scale=2.0)
+    # Baseline energy is ~ -1.1. In a stronger universe, the binding 
+    # energy changes due to coordinate scaling and mass effects.
+    assert abs(summary['energy'] - (-1.672)) < 0.1

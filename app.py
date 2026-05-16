@@ -52,20 +52,25 @@ use_audio = st.sidebar.checkbox("The Quantum Hum", value=False, help="Hear the e
 use_reality = st.sidebar.checkbox("Reality Check", value=False, help="Visualize the dissociation paradox where the math breaks.")
 use_alchemist = st.sidebar.checkbox("The Alchemist's Dial", value=False, help="Transmute the atom by continuously changing its nuclear charge.")
 use_movie = st.sidebar.checkbox("Quantum Movie: Attosecond Slosh", value=False, help="Visualize real-time electron sloshing (TDHF).")
+use_multiverse = st.sidebar.checkbox("The Multiverse Dial", value=False, help="Warp fundamental physics by scaling constants.")
+
+physics_scale = 1.0
+if use_multiverse:
+    physics_scale = st.sidebar.slider("Physics Strength (λ)", 0.5, 2.0, 1.0, 0.05)
 
 alchemist_delta = 0.0
 if use_alchemist:
     alchemist_delta = st.sidebar.slider("Nuclear Charge Delta (ΔZ)", -0.5, 1.0, 0.0, 0.05)
 
 @st.cache_resource
-def get_calculation(geometry, spin=0, wand_pos=None, wand_charge=0.0, alchemist_delta=0.0):
-    mol, mf = engine.run_calculation(geometry, spin=spin, wand_coords=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
+def get_calculation(geometry, spin=0, wand_pos=None, wand_charge=0.0, alchemist_delta=0.0, physics_scale=1.0):
+    mol, mf = engine.run_calculation(geometry, spin=spin, wand_coords=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta, physics_scale=physics_scale)
     return mol, mf
 
 @st.cache_data
-def get_cube(geometry, mo_index, spin=0, spin_type='alpha', wand_pos=None, wand_charge=0.0, alchemist_delta=0.0, nx=40, ny=40, nz=40):
+def get_cube(geometry, mo_index, spin=0, spin_type='alpha', wand_pos=None, wand_charge=0.0, alchemist_delta=0.0, physics_scale=1.0, nx=40, ny=40, nz=40):
     # Reuse the cached calculation from st.cache_resource
-    mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
+    mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta, physics_scale=physics_scale)
     return engine.generate_cube_string(mol, mf, mo_index, spin_type=spin_type, nx=nx, ny=ny, nz=nz)
 
 @st.cache_data
@@ -75,8 +80,8 @@ def get_dissociation_data(molecule_type):
     return distances, rhf, uhf
 
 @st.cache_data
-def get_movie_frames(geometry, spin=0, wand_pos=None, wand_charge=0.0, alchemist_delta=0.0):
-    mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
+def get_movie_frames(geometry, spin=0, wand_pos=None, wand_charge=0.0, alchemist_delta=0.0, physics_scale=1.0):
+    mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta, physics_scale=physics_scale)
     return engine.get_attosecond_frames(mol, mf)
 
 # Orbital selection
@@ -104,8 +109,8 @@ st.sidebar.caption("OrbitalPlay v0.1.1")
 # Run calculation
 with st.spinner("Calculating orbitals..."):
     try:
-        mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
-        summary = engine.get_molecule_summary(mol, mf, alchemist_delta=alchemist_delta)
+        mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta, physics_scale=physics_scale)
+        summary = engine.get_molecule_summary(mol, mf, alchemist_delta=alchemist_delta, physics_scale=physics_scale)
         
         n_mo = summary['n_mo']
         
@@ -122,10 +127,10 @@ with st.spinner("Calculating orbitals..."):
                                            range(n_mo), 
                                            format_func=lambda i: f"MO {i+1} ({'Occupied' if mo_occ[i]>0 else 'Virtual'})")
             
-            cube_data = get_cube(geometry, mo_index, spin=spin, spin_type=spin_type, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
+            cube_data = get_cube(geometry, mo_index, spin=spin, spin_type=spin_type, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta, physics_scale=physics_scale)
         else:
             # Movie mode
-            frames = get_movie_frames(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
+            frames = get_movie_frames(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta, physics_scale=physics_scale)
             frame_idx = st.sidebar.slider("Movie Frame (Time)", 0, len(frames)-1, 0)
             cube_data = frames[frame_idx]
         
