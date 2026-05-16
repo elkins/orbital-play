@@ -50,16 +50,21 @@ if use_wand:
 
 use_audio = st.sidebar.checkbox("The Quantum Hum", value=False, help="Hear the energy state of the molecule.")
 use_reality = st.sidebar.checkbox("Reality Check", value=False, help="Visualize the dissociation paradox where the math breaks.")
+use_alchemist = st.sidebar.checkbox("The Alchemist's Dial", value=False, help="Transmute the atom by continuously changing its nuclear charge.")
+
+alchemist_delta = 0.0
+if use_alchemist:
+    alchemist_delta = st.sidebar.slider("Nuclear Charge Delta (ΔZ)", -0.5, 1.0, 0.0, 0.05)
 
 @st.cache_resource
-def get_calculation(geometry, spin=0, wand_pos=None, wand_charge=0.0):
-    mol, mf = engine.run_calculation(geometry, spin=spin, wand_coords=wand_pos, wand_charge=wand_charge)
+def get_calculation(geometry, spin=0, wand_pos=None, wand_charge=0.0, alchemist_delta=0.0):
+    mol, mf = engine.run_calculation(geometry, spin=spin, wand_coords=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
     return mol, mf
 
 @st.cache_data
-def get_cube(geometry, mo_index, spin=0, spin_type='alpha', wand_pos=None, wand_charge=0.0, nx=40, ny=40, nz=40):
+def get_cube(geometry, mo_index, spin=0, spin_type='alpha', wand_pos=None, wand_charge=0.0, alchemist_delta=0.0, nx=40, ny=40, nz=40):
     # Reuse the cached calculation from st.cache_resource
-    mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge)
+    mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
     return engine.generate_cube_string(mol, mf, mo_index, spin_type=spin_type, nx=nx, ny=ny, nz=nz)
 
 @st.cache_data
@@ -93,8 +98,8 @@ st.sidebar.caption("OrbitalPlay v0.1")
 # Run calculation
 with st.spinner("Calculating orbitals..."):
     try:
-        mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge)
-        summary = engine.get_molecule_summary(mol, mf)
+        mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
+        summary = engine.get_molecule_summary(mol, mf, alchemist_delta=alchemist_delta)
         
         n_mo = summary['n_mo']
         
@@ -110,7 +115,7 @@ with st.spinner("Calculating orbitals..."):
                                        range(n_mo), 
                                        format_func=lambda i: f"MO {i+1} ({'Occupied' if mo_occ[i]>0 else 'Virtual'})")
         
-        cube_data = get_cube(geometry, mo_index, spin=spin, spin_type=spin_type, wand_pos=wand_pos, wand_charge=wand_charge)
+        cube_data = get_cube(geometry, mo_index, spin=spin, spin_type=spin_type, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
         
         # Display summary in columns
         col1, col2 = st.columns([2, 1])
@@ -156,6 +161,17 @@ with st.spinner("Calculating orbitals..."):
             view.addModel(xyz_str, 'xyz')
             view.setStyle({'stick': {}, 'sphere': {'scale': 0.3}})
             
+            # Label atoms with effective charge
+            for i in range(mol.natm):
+                symb = mol.atom_symbol(i)
+                coord = mol.atom_coord(i) * 0.529177 # Bohr to Angstrom
+                # First atom gets the delta
+                z_eff = mol.atom_charge(i) + (alchemist_delta if i == 0 else 0)
+                label = f"{symb} (Z={z_eff:.2f})"
+                
+                view.addLabel(label, {'position': {'x': coord[0], 'y': coord[1], 'z': coord[2]}, 
+                                      'backgroundColor': 'gray', 'fontColor': 'white', 'fontSize': 10, 'opacity': 0.6})
+
             # Render the Stark Wand if active
             if use_wand:
                 wand_color = "#FFD700" if wand_charge > 0 else "#9932CC" # Gold or Dark Orchid

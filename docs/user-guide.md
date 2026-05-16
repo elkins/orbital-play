@@ -57,3 +57,9 @@ The **Reality Check** feature demonstrates where the standard mathematical appro
     - **Restricted (RHF)** energy (our default) skyrockets as the bond breaks. This is impossible!
     - **Unrestricted (UHF)** energy correctly levels off.
 - **What to look for:** Stretch the $H_2$ bond distance beyond 2.0 Å. In the 3D view, you will see a warning. In the **Restricted** state, the math is forcing the two electrons to stay "smeared out" across both atoms even when they are miles apart. This is a purely mathematical artifact called **Static Correlation Error**.
+
+### 4. The Alchemist's Dial
+The **Alchemist's Dial** allows you to continuously transmute an atom by adjusting its nuclear charge ($Z$).
+- **The Science:** The "gravity" of an atom comes from the positive charge of its nucleus. By increasing $Z$, you increase the attractive force on the electrons. This is the concept of **Effective Nuclear Charge**.
+- **The Interaction:** Enable the dial in the sidebar and use the **Nuclear Charge Delta ($\Delta Z$)** slider.
+- **What to look for:** Watch the orbital clouds. As you increase $\Delta Z$, the orbitals will visibly **shrink and contract** toward the nucleus. This demonstrates why atoms get smaller as you move from left to right across the periodic table!

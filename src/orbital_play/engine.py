@@ -37,12 +37,13 @@ def generate_geometry(molecule_type, **kwargs):
     else:
         raise ValueError(f"Unsupported molecule type: {molecule_type}")
 
-def run_calculation(geometry_str, basis='sto-3g', spin=0, wand_coords=None, wand_charge=0.0):
+def run_calculation(geometry_str, basis='sto-3g', spin=0, wand_coords=None, wand_charge=0.0, alchemist_delta=0.0):
     """
-    Runs a Restricted or Unrestricted Hartree-Fock calculation with optional external point charge.
+    Runs a Restricted or Unrestricted Hartree-Fock calculation with optional external point charges.
     spin: 2S = N_alpha - N_beta
     wand_coords: (x, y, z) tuple in Angstroms
     wand_charge: float
+    alchemist_delta: float - Added charge to the first nucleus in the molecule.
     """
     mol = gto.M(atom=geometry_str, basis=basis, unit='Angstrom', spin=spin)
     if spin == 0:
@@ -50,11 +51,27 @@ def run_calculation(geometry_str, basis='sto-3g', spin=0, wand_coords=None, wand
     else:
         mf = scf.UHF(mol)
 
+    # Prepare background charges
+    charges = []
+    coords_bohr = []
+
+    # 1. The Stark Wand
     if wand_coords is not None and abs(wand_charge) > 1e-6:
-        # Add background charges (Stark Effect)
         # Convert Angstroms to Bohr (1 Angstrom ≈ 1.88973 Bohr)
-        coords_bohr = np.array([wand_coords]) * 1.88973
-        mf = qmmm.itrf.add_charges(mf, coords_bohr, [wand_charge])
+        coords_bohr.append(np.array(wand_coords) * 1.88973)
+        charges.append(wand_charge)
+
+    # 2. The Alchemist's Dial (Nuclear transmutation)
+    if abs(alchemist_delta) > 1e-6:
+        # Place the charge exactly on the first atom's nucleus
+        # Nudge it by a tiny amount to avoid 1/0 singularies
+        offset = 1e-5
+        atom_pos = mol.atom_coord(0) # In Bohr
+        coords_bohr.append(atom_pos + offset)
+        charges.append(alchemist_delta)
+
+    if charges:
+        mf = qmmm.add_mm_charges(mf, np.array(coords_bohr), charges)
 
     mf.kernel()
     return mol, mf
@@ -128,7 +145,7 @@ def generate_cube_string(mol, mf, mo_index, spin_type='alpha', nx=40, ny=40, nz=
             
     return cube_data
 
-def get_molecule_summary(mol, mf):
+def get_molecule_summary(mol, mf, alchemist_delta=0.0):
     """Returns a summary of the calculation results."""
     # Check if RHF or UHF
     # mo_energy: RHF is (n_mo,), UHF is (2, n_mo)
@@ -149,8 +166,20 @@ def get_molecule_summary(mol, mf):
         }
         n_mo = len(mf.mo_energy[0])
 
+    energy = mf.e_tot
+    
+    # Energy Correction for Alchemist's Dial
+    # We must subtract the unphysical repulsion between the host nucleus 
+    # and the delta-charge we placed on top of it.
+    if abs(alchemist_delta) > 1e-6:
+        offset_bohr = (1e-5) * 1.88973 # 1e-5 Angstrom in Bohr
+        z_host = mol.atom_charge(0)
+        # Using simple Coulomb repulsion between point charges at this distance
+        repulsion_correction = (z_host * alchemist_delta) / offset_bohr
+        energy -= repulsion_correction
+
     summary = {
-        'energy': mf.e_tot,
+        'energy': energy,
         'converged': mf.converged,
         'mo_energies': mo_energies,
         'mo_occ': mo_occ,
