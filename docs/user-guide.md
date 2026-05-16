@@ -63,3 +63,9 @@ The **Alchemist's Dial** allows you to continuously transmute an atom by adjusti
 - **The Science:** The "gravity" of an atom comes from the positive charge of its nucleus. By increasing $Z$, you increase the attractive force on the electrons. This is the concept of **Effective Nuclear Charge**.
 - **The Interaction:** Enable the dial in the sidebar and use the **Nuclear Charge Delta ($\Delta Z$)** slider.
 - **What to look for:** Watch the orbital clouds. As you increase $\Delta Z$, the orbitals will visibly **shrink and contract** toward the nucleus. This demonstrates why atoms get smaller as you move from left to right across the periodic table!
+
+### 5. Quantum Movie: Attosecond Slosh
+The **Quantum Movie** allows you to see electrons in motion.
+- **The Science:** Real-world electronic transitions aren't instant; they involve the "sloshing" of electron density. We use **Time-Dependent Hartree-Fock (TDHF)** to compute the first excited state and visualize the resulting dynamic density.
+- **The Interaction:** Enable the movie in the sidebar. Use the **Movie Frame (Time)** slider to scrub through the animation.
+- **What to look for:** A purple cloud representing the total electron density will appear. As you move the slider, you will see this density flow back and forth across the molecule—this is the fundamental motion of a quantum transition.

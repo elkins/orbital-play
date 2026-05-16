@@ -75,3 +75,11 @@ def test_calculate_dissociation_curve():
     assert len(uhf) == len(distances)
     # At large distance, UHF should be lower than RHF (symmetry breaking)
     assert uhf[2] < rhf[2]
+
+def test_get_attosecond_frames():
+    geometry = "H 0 0 0; H 0 0 0.74"
+    mol, mf = engine.run_calculation(geometry)
+    frames = engine.get_attosecond_frames(mol, mf, n_frames=3)
+    assert len(frames) == 3
+    assert "PySCF" in frames[0]
+    assert "density" in frames[0]

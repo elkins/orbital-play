@@ -51,6 +51,7 @@ if use_wand:
 use_audio = st.sidebar.checkbox("The Quantum Hum", value=False, help="Hear the energy state of the molecule.")
 use_reality = st.sidebar.checkbox("Reality Check", value=False, help="Visualize the dissociation paradox where the math breaks.")
 use_alchemist = st.sidebar.checkbox("The Alchemist's Dial", value=False, help="Transmute the atom by continuously changing its nuclear charge.")
+use_movie = st.sidebar.checkbox("Quantum Movie: Attosecond Slosh", value=False, help="Visualize real-time electron sloshing (TDHF).")
 
 alchemist_delta = 0.0
 if use_alchemist:
@@ -72,6 +73,11 @@ def get_dissociation_data(molecule_type):
     distances = np.linspace(0.5, 5.0, 40)
     rhf, uhf = engine.calculate_dissociation_curve(molecule_type, distances)
     return distances, rhf, uhf
+
+@st.cache_data
+def get_movie_frames(geometry, spin=0, wand_pos=None, wand_charge=0.0, alchemist_delta=0.0):
+    mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
+    return engine.get_attosecond_frames(mol, mf)
 
 # Orbital selection
 st.sidebar.header("Orbital Visualization")
@@ -111,11 +117,17 @@ with st.spinner("Calculating orbitals..."):
             mo_energies = summary['mo_energies'][spin_type]
             mo_occ = summary['mo_occ'][spin_type]
 
-        mo_index = st.sidebar.selectbox("Select Molecular Orbital", 
-                                       range(n_mo), 
-                                       format_func=lambda i: f"MO {i+1} ({'Occupied' if mo_occ[i]>0 else 'Virtual'})")
-        
-        cube_data = get_cube(geometry, mo_index, spin=spin, spin_type=spin_type, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
+        if not use_movie:
+            mo_index = st.sidebar.selectbox("Select Molecular Orbital", 
+                                           range(n_mo), 
+                                           format_func=lambda i: f"MO {i+1} ({'Occupied' if mo_occ[i]>0 else 'Virtual'})")
+            
+            cube_data = get_cube(geometry, mo_index, spin=spin, spin_type=spin_type, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
+        else:
+            # Movie mode
+            frames = get_movie_frames(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge, alchemist_delta=alchemist_delta)
+            frame_idx = st.sidebar.slider("Movie Frame (Time)", 0, len(frames)-1, 0)
+            cube_data = frames[frame_idx]
         
         # Display summary in columns
         col1, col2 = st.columns([2, 1])
@@ -181,9 +193,14 @@ with st.spinner("Calculating orbitals..."):
                 view.addLabel(f"q={wand_charge:+.1f}", {'position': {'x': wand_pos[0], 'y': wand_pos[1], 'z': wand_pos[2]}, 
                                                        'backgroundColor': 'white', 'fontColor': 'black', 'fontSize': 12})
 
-            # Add volumetric data (orbitals)
-            view.addVolumetricData(cube_data, "cube", {'isoval': iso_val, 'color': "blue", 'opacity': 0.6})
-            view.addVolumetricData(cube_data, "cube", {'isoval': -iso_val, 'color': "red", 'opacity': 0.6})
+            # Add volumetric data (orbitals or total density)
+            if not use_movie:
+                view.addVolumetricData(cube_data, "cube", {'isoval': iso_val, 'color': "blue", 'opacity': 0.6})
+                view.addVolumetricData(cube_data, "cube", {'isoval': -iso_val, 'color': "red", 'opacity': 0.6})
+            else:
+                # Total Density is always positive
+                # We use a higher isoval for total density visibility
+                view.addVolumetricData(cube_data, "cube", {'isoval': iso_val * 2, 'color': "purple", 'opacity': 0.6})
             
             view.zoomTo()
             showmol(view, height=600, width=800)

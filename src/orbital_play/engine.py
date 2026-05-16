@@ -1,5 +1,5 @@
 import numpy as np
-from pyscf import gto, scf, qmmm
+from pyscf import gto, scf, qmmm, tdscf
 from pyscf.tools import cubegen
 import io
 import tempfile
@@ -111,6 +111,55 @@ def calculate_dissociation_curve(molecule_type, distances, basis='sto-3g'):
         uhf_energies.append(mf_uhf.e_tot)
         
     return rhf_energies, uhf_energies
+
+def get_attosecond_frames(mol, mf, n_frames=10, amplitude=0.5):
+    """
+    Generates a sequence of total electron density cubes representing 
+    the 'sloshing' of electrons in an excited state superposition.
+    """
+    # 1. Run TDHF for the first excited state
+    td = tdscf.rhf.TDHF(mf)
+    td.nstates = 1
+    td.kernel()
+    
+    # 2. Extract transition density matrix in AO basis
+    # T = C_occ * X * C_virt.T + C_virt * Y * C_occ.T
+    mo_coeff = mf.mo_coeff
+    nocc = mol.nelectron // 2
+    
+    x, y = td.xy[0] # Amplitudes for first state
+    # x and y are (nocc, nvir)
+    
+    c_occ = mo_coeff[:, :nocc]
+    c_vir = mo_coeff[:, nocc:]
+    
+    # Transition density matrix (AO basis)
+    t_dm = (c_occ @ x @ c_vir.T) + (c_vir @ y @ c_occ.T)
+    # Ensure it's symmetric for cubegen (approximating real part)
+    t_dm = t_dm + t_dm.T
+    
+    # Ground state density
+    gs_dm = mf.make_rdm1()
+    
+    frames = []
+    # Create temporal sequence (one full cycle)
+    for i in range(n_frames):
+        phase = 2 * np.pi * i / n_frames
+        # Superposition density: rho_gs + amp * cos(theta) * rho_trans
+        current_dm = gs_dm + amplitude * np.cos(phase) * t_dm
+        
+        # Generate cube string for total density
+        fd, path = tempfile.mkstemp(suffix='.cube')
+        try:
+            cubegen.density(mol, path, current_dm, nx=30, ny=30, nz=30)
+            with open(path, 'r') as f:
+                frames.append(f.read())
+        finally:
+            os.close(fd)
+            if os.path.exists(path):
+                os.remove(path)
+                
+    return frames
 
 def generate_cube_string(mol, mf, mo_index, spin_type='alpha', nx=40, ny=40, nz=40):
     """
