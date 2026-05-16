@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "orbital-play"
+version = "0.1.0"
+authors = [
+  { name="George Elkins", email="george@example.com" },
+]
+description = "OrbitalPlay: Interactive Molecular Orbital Education"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Intended Audience :: Education",
+]
+dependencies = [
+    "pyscf",
+    "numpy",
+    "py3Dmol",
+    "stmol",
+    "streamlit",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/elkins/orbital-play"
+"Bug Tracker" = "https://github.com/elkins/orbital-play/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:divide by zero encountered in matmul:RuntimeWarning:pyscf.tools.cubegen",
+    "ignore:overflow encountered in matmul:RuntimeWarning:pyscf.tools.cubegen",
+    "ignore:invalid value encountered in matmul:RuntimeWarning:pyscf.tools.cubegen",
+]

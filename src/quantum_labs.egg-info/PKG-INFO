@@ -1,0 +1,45 @@
+Metadata-Version: 2.4
+Name: quantum-labs
+Version: 0.1.0
+Summary: Interactive Molecular Orbital Education
+Author-email: George Elkins <george@example.com>
+Project-URL: Homepage, https://github.com/yourusername/quantum-labs
+Project-URL: Bug Tracker, https://github.com/yourusername/quantum-labs/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering :: Chemistry
+Classifier: Intended Audience :: Education
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: pyscf
+Requires-Dist: numpy
+Requires-Dist: py3Dmol
+Requires-Dist: stmol
+Requires-Dist: streamlit
+
+# Quantum Labs
+
+Interactive Molecular Orbital Education. Solve the Schrödinger equation for simple molecules in real-time and visualize the resulting orbitals.
+
+## Installation
+
+```bash
+pip install quantum-labs
+```
+
+## Usage
+
+### Streamlit App
+Launch the interactive playground:
+```bash
+streamlit run app.py
+```
+
+### Library
+Use the engine in your own scripts or notebooks:
+```python
+from quantum_labs import engine
+geometry = engine.generate_geometry("H2O", dist=0.96, angle=104.5)
+mol, mf = engine.run_calculation(geometry)
+```

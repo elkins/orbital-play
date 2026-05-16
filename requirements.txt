@@ -1,0 +1,8 @@
+streamlit
+pyscf
+py3Dmol
+stmol
+numpy
+pytest
+pytest-mock
+ipython_genutils

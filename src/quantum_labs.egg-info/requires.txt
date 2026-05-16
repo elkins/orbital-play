@@ -1,0 +1,5 @@
+pyscf
+numpy
+py3Dmol
+stmol
+streamlit
