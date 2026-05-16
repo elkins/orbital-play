@@ -36,6 +36,32 @@ In UHF, Alpha and Beta electrons are allowed to occupy different spatial orbital
 
 OrbitalPlay allows you to toggle between these two sets of orbitals for the **Hydroxyl radical (·OH)**, making this subtle quantum effect visible.
 
+## Advanced Experimental Phenomena
+
+OrbitalPlay extends beyond basic Hartree-Fock to showcase complex physical interactions.
+
+### 1. The Stark Effect & Polarizability
+When an external electric field is applied (via the **Stark Wand**), the molecular Hamiltonian is perturbed:
+
+\\[ \hat{H} = \hat{H}_0 - \vec{\mu} \cdot \vec{E} \\]
+
+Where \\(\vec{\mu}\\) is the molecular dipole operator and \\(\vec{E}\\) is the external field. This interaction causes the electron density to shift, or **polarize**. You can observe the orbitals physically "stretching" toward or "recoiling" from your external point charge, demonstrating the molecule's response to its environment.
+
+### 2. Atomic Contraction (The Alchemist's Dial)
+The size of an orbital is dictated by the balance between the kinetic energy of the electron and the electrostatic attraction of the nucleus. For a hydrogen-like atom, the radial part of the wavefunction scales with the nuclear charge \\(Z\\):
+
+\\[ \psi(r) \sim e^{-Zr/n a_0} \\]
+
+As you increase \\(Z\\) using the **Alchemist's Dial**, the exponent grows larger, causing the wavefunction to decay much faster with distance. Visually, this results in the orbital "contracting" or shrinking toward the nucleus, a fundamental demonstration of why atoms become smaller as you move right across a period in the Periodic Table.
+
+### 3. Data Sonification (The Quantum Hum)
+Molecular orbitals are fundamentally three-dimensional probability waves. In **The Quantum Hum**, we map the total energy of a specific quantum state to an acoustic frequency. This allows us to "hear" the stability of a system:
+
+- **Lower Frequency:** Lower energy (more stable state).
+- **Higher Frequency:** Higher energy (less stable or "tense" state).
+
+By sonifying the data, we provide a multi-sensory bridge to understanding the "tension" in a chemical bond as it is stretched or polarized.
+
 ## Molecular Orbitals (MOs)
 ...
 
