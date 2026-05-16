@@ -6,12 +6,12 @@ OrbitalPlay uses established principles of computational chemistry to visualize 
 
 At the heart of the engine is the time-independent Schrödinger Equation:
 
-\\[ \hat{H}\Psi = E\Psi \\]
+$$ \hat{H}\Psi = E\Psi $$
 
 Where:
-- \\(\hat{H}\\) is the Hamiltonian operator representing the total energy.
-- \\(\Psi\\) is the wavefunction.
-- \\(E\\) is the energy of the system.
+- $\hat{H}$ is the Hamiltonian operator representing the total energy.
+- $\Psi$ is the wavefunction.
+- $E$ is the energy of the system.
 
 ## Hartree-Fock Method
 
@@ -50,9 +50,9 @@ Where \\(\vec{\mu}\\) is the molecular dipole operator and \\(\vec{E}\\) is the 
 ### 2. Atomic Contraction (The Alchemist's Dial)
 The size of an orbital is dictated by the balance between the kinetic energy of the electron and the electrostatic attraction of the nucleus. For a hydrogen-like atom, the radial part of the wavefunction scales with the nuclear charge \\(Z\\):
 
-\\[ \psi(r) \sim e^{-Zr/n a_0} \\]
+$$ \psi(r) \sim e^{-Zr/n a_0} $$
 
-As you increase \\(Z\\) using the **Alchemist's Dial**, the exponent grows larger, causing the wavefunction to decay much faster with distance. Visually, this results in the orbital "contracting" or shrinking toward the nucleus, a fundamental demonstration of why atoms become smaller as you move right across a period in the Periodic Table.
+As you increase $Z$ using the **Alchemist's Dial**, the exponent grows larger, causing the wavefunction to decay much faster with distance. Visually, this results in the orbital "contracting" or shrinking toward the nucleus, a fundamental demonstration of why atoms become smaller as you move right across a period in the Periodic Table.
 
 ### 3. Data Sonification (The Quantum Hum)
 Molecular orbitals are fundamentally three-dimensional probability waves. In **The Quantum Hum**, we map the total energy of a specific quantum state to an acoustic frequency. This allows us to "hear" the stability of a system:
@@ -65,14 +65,14 @@ By sonifying the data, we provide a multi-sensory bridge to understanding the "t
 ### 4. Attosecond Science & Dynamic Density
 Traditionally, chemistry is taught using stationary orbitals (the time-independent Schrödinger equation). However, the **2023 Nobel Prize in Physics** was awarded for **Attosecond Pulses**, which allow us to observe electrons as they move in real-time.
 
-In **The Attosecond Movie**, we visualize the **Total Electron Density** \\(\rho(r, t)\\). This is done by simulating a coherent superposition of the ground state and the first excited state (calculated via Time-Dependent Hartree-Fock, or TDHF). As the phase of the excited state changes over time, the electron density physically "sloshes" back and forth across the molecule, demonstrating the dynamic nature of chemical transitions.
+In **The Attosecond Movie**, we visualize the **Total Electron Density** $\rho(r, t)$. This is done by simulating a coherent superposition of the ground state and the first excited state (calculated via Time-Dependent Hartree-Fock, or TDHF). As the phase of the excited state changes over time, the electron density physically "sloshes" back and forth across the molecule, demonstrating the dynamic nature of chemical transitions.
 
 ## Molecular Orbitals (MOs)
 
 Molecular orbitals (MOs) are mathematical functions that describe the location and wave-like behavior of an electron in a molecule. 
 
 ### Probability Density
-The physical interpretation of the wavefunction is that its square, \\(|\Psi|^2\\), represents the **probability density** of finding an electron at a specific point in space.
+The physical interpretation of the wavefunction is that its square, $|\Psi|^2$, represents the **probability density** of finding an electron at a specific point in space.
 
 ### Phases
-The colors you see in the visualization (Blue and Red) represent the **phase** (sign) of the wavefunction \\(\Psi\\). Phase is crucial for understanding how orbitals overlap to form bonds (constructive interference) or create nodes (destructive interference).
+The colors you see in the visualization (Blue and Red) represent the **phase** (sign) of the wavefunction $\Psi$. Phase is crucial for understanding how orbitals overlap to form bonds (constructive interference) or create nodes (destructive interference).

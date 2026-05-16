@@ -20,6 +20,7 @@ nav:
 markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
+      smart_dollar: true
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite:
