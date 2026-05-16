@@ -6,11 +6,22 @@ window.MathJax = {
     processEnvironments: true
   },
   options: {
-    ignoreHtmlClass: ".*|",
+    ignoreHtmlClass: ".*",
     processHtmlClass: "arithmatex"
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  MathJax.typesetPromise();
+document.addEventListener("DOMContentLoaded", function() {
+  if (typeof MathJax !== 'undefined') {
+    MathJax.typesetPromise();
+  }
 });
+
+// For MkDocs Material instant loading
+if (typeof app !== 'undefined') {
+  app.document$.subscribe(function() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.typesetPromise();
+    }
+  });
+}

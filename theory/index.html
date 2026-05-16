@@ -902,11 +902,11 @@
 <p>OrbitalPlay uses established principles of computational chemistry to visualize the invisible.</p>
 <h2 id="the-schrodinger-equation">The Schrödinger Equation</h2>
 <p>At the heart of the engine is the time-independent Schrödinger Equation:</p>
-<p>\[ \hat{H}\Psi = E\Psi \]</p>
+<div class="arithmatex">\[ \hat{H}\Psi = E\Psi \]</div>
 <p>Where:
-- \(\hat{H}\) is the Hamiltonian operator representing the total energy.
-- \(\Psi\) is the wavefunction.
-- \(E\) is the energy of the system.</p>
+- <span class="arithmatex">\(\hat{H}\)</span> is the Hamiltonian operator representing the total energy.
+- <span class="arithmatex">\(\Psi\)</span> is the wavefunction.
+- <span class="arithmatex">\(E\)</span> is the energy of the system.</p>
 <h2 id="hartree-fock-method">Hartree-Fock Method</h2>
 <p>Since the exact Schrödinger equation cannot be solved for systems with more than one electron, we use the <strong>Hartree-Fock (HF)</strong> method. This is an approximation that assumes each electron moves in an average field created by the other electrons and the nuclei.</p>
 <p>OrbitalPlay implements <strong>Restricted Hartree-Fock (RHF)</strong>, which is suitable for the closed-shell molecules (<span class="arithmatex">\(H_2\)</span>, <span class="arithmatex">\(H_2O\)</span>, <span class="arithmatex">\(CH_4\)</span>) featured in the playground.</p>
@@ -927,8 +927,8 @@
 <p>Where \(\vec{\mu}\) is the molecular dipole operator and \(\vec{E}\) is the external field. This interaction causes the electron density to shift, or <strong>polarize</strong>. You can observe the orbitals physically "stretching" toward or "recoiling" from your external point charge, demonstrating the molecule's response to its environment.</p>
 <h3 id="2-atomic-contraction-the-alchemists-dial">2. Atomic Contraction (The Alchemist's Dial)</h3>
 <p>The size of an orbital is dictated by the balance between the kinetic energy of the electron and the electrostatic attraction of the nucleus. For a hydrogen-like atom, the radial part of the wavefunction scales with the nuclear charge \(Z\):</p>
-<p>\[ \psi(r) \sim e^{-Zr/n a_0} \]</p>
-<p>As you increase \(Z\) using the <strong>Alchemist's Dial</strong>, the exponent grows larger, causing the wavefunction to decay much faster with distance. Visually, this results in the orbital "contracting" or shrinking toward the nucleus, a fundamental demonstration of why atoms become smaller as you move right across a period in the Periodic Table.</p>
+<div class="arithmatex">\[ \psi(r) \sim e^{-Zr/n a_0} \]</div>
+<p>As you increase <span class="arithmatex">\(Z\)</span> using the <strong>Alchemist's Dial</strong>, the exponent grows larger, causing the wavefunction to decay much faster with distance. Visually, this results in the orbital "contracting" or shrinking toward the nucleus, a fundamental demonstration of why atoms become smaller as you move right across a period in the Periodic Table.</p>
 <h3 id="3-data-sonification-the-quantum-hum">3. Data Sonification (The Quantum Hum)</h3>
 <p>Molecular orbitals are fundamentally three-dimensional probability waves. In <strong>The Quantum Hum</strong>, we map the total energy of a specific quantum state to an acoustic frequency. This allows us to "hear" the stability of a system:</p>
 <ul>
@@ -938,13 +938,13 @@
 <p>By sonifying the data, we provide a multi-sensory bridge to understanding the "tension" in a chemical bond as it is stretched or polarized.</p>
 <h3 id="4-attosecond-science-dynamic-density">4. Attosecond Science &amp; Dynamic Density</h3>
 <p>Traditionally, chemistry is taught using stationary orbitals (the time-independent Schrödinger equation). However, the <strong>2023 Nobel Prize in Physics</strong> was awarded for <strong>Attosecond Pulses</strong>, which allow us to observe electrons as they move in real-time.</p>
-<p>In <strong>The Attosecond Movie</strong>, we visualize the <strong>Total Electron Density</strong> \(\rho(r, t)\). This is done by simulating a coherent superposition of the ground state and the first excited state (calculated via Time-Dependent Hartree-Fock, or TDHF). As the phase of the excited state changes over time, the electron density physically "sloshes" back and forth across the molecule, demonstrating the dynamic nature of chemical transitions.</p>
+<p>In <strong>The Attosecond Movie</strong>, we visualize the <strong>Total Electron Density</strong> <span class="arithmatex">\(\rho(r, t)\)</span>. This is done by simulating a coherent superposition of the ground state and the first excited state (calculated via Time-Dependent Hartree-Fock, or TDHF). As the phase of the excited state changes over time, the electron density physically "sloshes" back and forth across the molecule, demonstrating the dynamic nature of chemical transitions.</p>
 <h2 id="molecular-orbitals-mos">Molecular Orbitals (MOs)</h2>
 <p>Molecular orbitals (MOs) are mathematical functions that describe the location and wave-like behavior of an electron in a molecule. </p>
 <h3 id="probability-density">Probability Density</h3>
-<p>The physical interpretation of the wavefunction is that its square, \(|\Psi|^2\), represents the <strong>probability density</strong> of finding an electron at a specific point in space.</p>
+<p>The physical interpretation of the wavefunction is that its square, <span class="arithmatex">\(|\Psi|^2\)</span>, represents the <strong>probability density</strong> of finding an electron at a specific point in space.</p>
 <h3 id="phases">Phases</h3>
-<p>The colors you see in the visualization (Blue and Red) represent the <strong>phase</strong> (sign) of the wavefunction \(\Psi\). Phase is crucial for understanding how orbitals overlap to form bonds (constructive interference) or create nodes (destructive interference).</p>
+<p>The colors you see in the visualization (Blue and Red) represent the <strong>phase</strong> (sign) of the wavefunction <span class="arithmatex">\(\Psi\)</span>. Phase is crucial for understanding how orbitals overlap to form bonds (constructive interference) or create nodes (destructive interference).</p>
 
 
 
