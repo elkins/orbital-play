@@ -68,9 +68,8 @@ Traditionally, chemistry is taught using stationary orbitals (the time-independe
 In **The Attosecond Movie**, we visualize the **Total Electron Density** \\(\rho(r, t)\\). This is done by simulating a coherent superposition of the ground state and the first excited state (calculated via Time-Dependent Hartree-Fock, or TDHF). As the phase of the excited state changes over time, the electron density physically "sloshes" back and forth across the molecule, demonstrating the dynamic nature of chemical transitions.
 
 ## Molecular Orbitals (MOs)
-...
 
-Molecular orbitals are mathematical functions that describe the location and wave-like behavior of an electron in a molecule. 
+Molecular orbitals (MOs) are mathematical functions that describe the location and wave-like behavior of an electron in a molecule. 
 
 ### Probability Density
 The physical interpretation of the wavefunction is that its square, \\(|\Psi|^2\\), represents the **probability density** of finding an electron at a specific point in space.
