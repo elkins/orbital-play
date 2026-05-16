@@ -67,3 +67,11 @@ def test_generate_cube_string_uhf():
     # Test beta
     cube_beta = engine.generate_cube_string(mol, mf, 0, spin_type='beta', nx=10, ny=10, nz=10)
     assert "PySCF" in cube_beta
+
+def test_calculate_dissociation_curve():
+    distances = [0.74, 1.5, 3.0]
+    rhf, uhf = engine.calculate_dissociation_curve("H2", distances)
+    assert len(rhf) == len(distances)
+    assert len(uhf) == len(distances)
+    # At large distance, UHF should be lower than RHF (symmetry breaking)
+    assert uhf[2] < rhf[2]

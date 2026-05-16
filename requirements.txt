@@ -6,3 +6,4 @@ numpy
 pytest
 pytest-mock
 ipython_genutils
+pandas

@@ -1,5 +1,5 @@
 import numpy as np
-from pyscf import gto, scf
+from pyscf import gto, scf, qmmm
 from pyscf.tools import cubegen
 import io
 import tempfile
@@ -37,18 +37,63 @@ def generate_geometry(molecule_type, **kwargs):
     else:
         raise ValueError(f"Unsupported molecule type: {molecule_type}")
 
-def run_calculation(geometry_str, basis='sto-3g', spin=0):
+def run_calculation(geometry_str, basis='sto-3g', spin=0, wand_coords=None, wand_charge=0.0):
     """
-    Runs a Restricted or Unrestricted Hartree-Fock calculation.
+    Runs a Restricted or Unrestricted Hartree-Fock calculation with optional external point charge.
     spin: 2S = N_alpha - N_beta
+    wand_coords: (x, y, z) tuple in Angstroms
+    wand_charge: float
     """
     mol = gto.M(atom=geometry_str, basis=basis, unit='Angstrom', spin=spin)
     if spin == 0:
         mf = scf.RHF(mol)
     else:
         mf = scf.UHF(mol)
+
+    if wand_coords is not None and abs(wand_charge) > 1e-6:
+        # Add background charges (Stark Effect)
+        # Convert Angstroms to Bohr (1 Angstrom ≈ 1.88973 Bohr)
+        coords_bohr = np.array([wand_coords]) * 1.88973
+        mf = qmmm.itrf.add_charges(mf, coords_bohr, [wand_charge])
+
     mf.kernel()
     return mol, mf
+
+def calculate_dissociation_curve(molecule_type, distances, basis='sto-3g'):
+    """
+    Calculates RHF and UHF energies for a range of distances.
+    Useful for demonstrating the dissociation paradox (static correlation error).
+    """
+    rhf_energies = []
+    uhf_energies = []
+    
+    for dist in distances:
+        geometry = generate_geometry(molecule_type, dist=dist)
+        
+        # RHF
+        mol_rhf = gto.M(atom=geometry, basis=basis, unit='Angstrom', spin=0)
+        mf_rhf = scf.RHF(mol_rhf)
+        mf_rhf.verbose = 0
+        mf_rhf.kernel()
+        rhf_energies.append(mf_rhf.e_tot)
+        
+        # UHF
+        mol_uhf = gto.M(atom=geometry, basis=basis, unit='Angstrom', spin=0)
+        mf_uhf = scf.UHF(mol_uhf)
+        mf_uhf.verbose = 0
+        
+        if dist > 1.2:
+            # Manually nudge UHF to break symmetry (Static Correlation demonstration)
+            dm_initial = mf_uhf.get_init_guess()
+            # Perturb the beta density matrix to favor localization
+            dm_initial[1][0, 0] += 0.1 
+            mf_uhf.kernel(dm0=dm_initial)
+        else:
+            mf_uhf.kernel()
+            
+        uhf_energies.append(mf_uhf.e_tot)
+        
+    return rhf_energies, uhf_energies
 
 def generate_cube_string(mol, mf, mo_index, spin_type='alpha', nx=40, ny=40, nz=40):
     """

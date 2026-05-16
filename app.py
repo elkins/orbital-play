@@ -1,5 +1,5 @@
 import streamlit as st
-from orbital_play import engine
+from orbital_play import engine, sonify
 from stmol import showmol
 import py3Dmol
 import numpy as np
@@ -19,7 +19,7 @@ molecule_type = st.sidebar.selectbox("Select Molecule", ["H2", "H2O", "CH4", "OH
 spin = 0
 
 if molecule_type == "H2":
-    dist = st.sidebar.slider("Bond Distance (Å)", 0.5, 3.0, 0.74, 0.01)
+    dist = st.sidebar.slider("Bond Distance (Å)", 0.5, 5.0, 0.74, 0.01)
     geometry = engine.generate_geometry("H2", dist=dist)
     
 elif molecule_type == "H2O":
@@ -36,16 +36,37 @@ elif molecule_type == "OH (Radical)":
     geometry = engine.generate_geometry("OH", dist=dist)
     spin = 1
 
+# Experimental section
+st.sidebar.header("Experimental Features")
+use_wand = st.sidebar.checkbox("The Stark Wand", value=False, help="Interact with the molecule using an external point charge.")
+wand_pos = None
+wand_charge = 0.0
+if use_wand:
+    wx = st.sidebar.slider("Wand X (Å)", -5.0, 5.0, 2.0, 0.1)
+    wy = st.sidebar.slider("Wand Y (Å)", -5.0, 5.0, 0.0, 0.1)
+    wz = st.sidebar.slider("Wand Z (Å)", -5.0, 5.0, 0.0, 0.1)
+    wand_pos = (wx, wy, wz)
+    wand_charge = st.sidebar.slider("Wand Charge (q)", -2.0, 2.0, 1.0, 0.1)
+
+use_audio = st.sidebar.checkbox("The Quantum Hum", value=False, help="Hear the energy state of the molecule.")
+use_reality = st.sidebar.checkbox("Reality Check", value=False, help="Visualize the dissociation paradox where the math breaks.")
+
 @st.cache_resource
-def get_calculation(geometry, spin=0):
-    mol, mf = engine.run_calculation(geometry, spin=spin)
+def get_calculation(geometry, spin=0, wand_pos=None, wand_charge=0.0):
+    mol, mf = engine.run_calculation(geometry, spin=spin, wand_coords=wand_pos, wand_charge=wand_charge)
     return mol, mf
 
 @st.cache_data
-def get_cube(geometry, mo_index, spin=0, spin_type='alpha', nx=40, ny=40, nz=40):
+def get_cube(geometry, mo_index, spin=0, spin_type='alpha', wand_pos=None, wand_charge=0.0, nx=40, ny=40, nz=40):
     # Reuse the cached calculation from st.cache_resource
-    mol, mf = get_calculation(geometry, spin=spin)
+    mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge)
     return engine.generate_cube_string(mol, mf, mo_index, spin_type=spin_type, nx=nx, ny=ny, nz=nz)
+
+@st.cache_data
+def get_dissociation_data(molecule_type):
+    distances = np.linspace(0.5, 5.0, 40)
+    rhf, uhf = engine.calculate_dissociation_curve(molecule_type, distances)
+    return distances, rhf, uhf
 
 # Orbital selection
 st.sidebar.header("Orbital Visualization")
@@ -72,7 +93,7 @@ st.sidebar.caption("OrbitalPlay v0.1")
 # Run calculation
 with st.spinner("Calculating orbitals..."):
     try:
-        mol, mf = get_calculation(geometry, spin=spin)
+        mol, mf = get_calculation(geometry, spin=spin, wand_pos=wand_pos, wand_charge=wand_charge)
         summary = engine.get_molecule_summary(mol, mf)
         
         n_mo = summary['n_mo']
@@ -89,7 +110,7 @@ with st.spinner("Calculating orbitals..."):
                                        range(n_mo), 
                                        format_func=lambda i: f"MO {i+1} ({'Occupied' if mo_occ[i]>0 else 'Virtual'})")
         
-        cube_data = get_cube(geometry, mo_index, spin=spin, spin_type=spin_type)
+        cube_data = get_cube(geometry, mo_index, spin=spin, spin_type=spin_type, wand_pos=wand_pos, wand_charge=wand_charge)
         
         # Display summary in columns
         col1, col2 = st.columns([2, 1])
@@ -100,6 +121,25 @@ with st.spinner("Calculating orbitals..."):
             st.write(f"**Converged:** {summary['converged']}")
             st.write(f"**Electrons:** {summary['n_electron']}")
             
+            if use_audio:
+                hum_wav = sonify.generate_hum(summary['energy'])
+                st.audio(hum_wav, format="audio/wav")
+
+            if use_reality and molecule_type == "H2":
+                st.markdown("---")
+                st.subheader("The Dissociation Paradox")
+                dists, rhf, uhf = get_dissociation_data("H2")
+                
+                import pandas as pd
+                chart_data = pd.DataFrame({
+                    'Distance (Å)': dists,
+                    'Restricted (RHF)': rhf,
+                    'Unrestricted (UHF)': uhf
+                }).set_index('Distance (Å)')
+                
+                st.line_chart(chart_data)
+                st.info("The **Restricted (RHF)** energy fails to level off, diverging from reality. This is the **Static Correlation Error**.")
+
             spin_label = f" ({spin_type.capitalize()})" if spin > 0 else ""
             st.subheader(f"MO Energies{spin_label}")
             for i, energy in enumerate(mo_energies):
@@ -116,12 +156,24 @@ with st.spinner("Calculating orbitals..."):
             view.addModel(xyz_str, 'xyz')
             view.setStyle({'stick': {}, 'sphere': {'scale': 0.3}})
             
+            # Render the Stark Wand if active
+            if use_wand:
+                wand_color = "#FFD700" if wand_charge > 0 else "#9932CC" # Gold or Dark Orchid
+                view.addSphere({'center': {'x': wand_pos[0], 'y': wand_pos[1], 'z': wand_pos[2]}, 
+                                'radius': 0.4, 'color': wand_color, 'opacity': 0.8})
+                # Add a label for the charge
+                view.addLabel(f"q={wand_charge:+.1f}", {'position': {'x': wand_pos[0], 'y': wand_pos[1], 'z': wand_pos[2]}, 
+                                                       'backgroundColor': 'white', 'fontColor': 'black', 'fontSize': 12})
+
             # Add volumetric data (orbitals)
             view.addVolumetricData(cube_data, "cube", {'isoval': iso_val, 'color': "blue", 'opacity': 0.6})
             view.addVolumetricData(cube_data, "cube", {'isoval': -iso_val, 'color': "red", 'opacity': 0.6})
             
             view.zoomTo()
             showmol(view, height=600, width=800)
+
+            if use_reality and molecule_type == "H2" and dist > 1.8 and spin == 0:
+                st.warning("⚠️ **Unphysical State:** In this 'Restricted' mode, electrons are forced into a mathematical 'ghost' state where they are delocalized across both atoms, even at 5 Å.")
             
     except Exception as e:
         st.error(f"Error during calculation: {e}")

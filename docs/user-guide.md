@@ -33,3 +33,27 @@ The right panel provides the technical data behind the visual:
 - **Bonding vs. Anti-bonding:** Show students the $H_2$ molecule. MO 1 (bonding) has a continuous cloud between nuclei, while MO 2 (anti-bonding) has a distinct node (gap) in the middle.
 - **Geometric Influence:** Watch how the HOMO (Highest Occupied Molecular Orbital) of Water changes its shape as you vary the bond angle from 90° to 120°.
 - **Spin Polarization:** Select the **OH Radical**. Toggle between Alpha and Beta spin channels for the same MO index (e.g., MO 5). Notice how the "Alpha" orbital (which contains the unpaired electron) has a different shape and energy than its "Beta" counterpart. This is a direct visualization of the Pauli Exclusion Principle and exchange interaction in action.
+
+## Experimental Features
+
+OrbitalPlay includes highly experimental features to explore the "weirdness" of quantum chemistry.
+
+### 1. The Stark Wand
+The **Stark Wand** allows you to interact with the molecule using an external point charge (an "Ion"). 
+- **The Science:** This demonstrates the **Stark Effect**. When an external electric field (from your Wand) is applied, the molecular orbitals polarize.
+- **The Interaction:** Enable the wand in the sidebar and use the X, Y, Z sliders to move it around the molecule. Use the **Charge ($q$)** slider to change its intensity.
+- **What to look for:** Watch the Highest Occupied Molecular Orbital (HOMO) of Water "reach out" to touch a positive charge or "recoil" from a negative one.
+
+### 2. The Quantum Hum
+The **Quantum Hum** is a data sonification tool that turns the energy of the system into sound.
+- **The Science:** Every quantum state has an associated energy. We map this energy value to an audible frequency.
+- **The Interaction:** Enable the hum in the sidebar. Every time the system recalculates, a brief "hum" will play. 
+- **What to look for:** As you move the Stark Wand or change the bond distance, notice how the **pitch** of the hum shifts. This provides an auditory "feel" for the stability of the quantum system.
+
+### 3. Reality Check: Dissociation Paradox
+The **Reality Check** feature demonstrates where the standard mathematical approximations in quantum chemistry physically fail.
+- **The Pathological Case:** Select **$H_2$** and enable **Reality Check**.
+- **The Paradox Plot:** A graph will appear showing the energy of the molecule as you stretch it. 
+    - **Restricted (RHF)** energy (our default) skyrockets as the bond breaks. This is impossible!
+    - **Unrestricted (UHF)** energy correctly levels off.
+- **What to look for:** Stretch the $H_2$ bond distance beyond 2.0 Å. In the 3D view, you will see a warning. In the **Restricted** state, the math is forcing the two electrons to stay "smeared out" across both atoms even when they are miles apart. This is a purely mathematical artifact called **Static Correlation Error**.
