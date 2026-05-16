@@ -543,6 +543,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#experimental-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experimental Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experimental Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-stark-wand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Stark Wand
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-quantum-hum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Quantum Hum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-reality-check-dissociation-paradox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Reality Check: Dissociation Paradox
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -703,6 +753,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#experimental-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experimental Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experimental Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-stark-wand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Stark Wand
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-quantum-hum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Quantum Hum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-reality-check-dissociation-paradox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Reality Check: Dissociation Paradox
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -752,6 +852,25 @@
 <li><strong>Geometric Influence:</strong> Watch how the HOMO (Highest Occupied Molecular Orbital) of Water changes its shape as you vary the bond angle from 90° to 120°.</li>
 <li><strong>Spin Polarization:</strong> Select the <strong>OH Radical</strong>. Toggle between Alpha and Beta spin channels for the same MO index (e.g., MO 5). Notice how the "Alpha" orbital (which contains the unpaired electron) has a different shape and energy than its "Beta" counterpart. This is a direct visualization of the Pauli Exclusion Principle and exchange interaction in action.</li>
 </ul>
+<h2 id="experimental-features">Experimental Features</h2>
+<p>OrbitalPlay includes highly experimental features to explore the "weirdness" of quantum chemistry.</p>
+<h3 id="1-the-stark-wand">1. The Stark Wand</h3>
+<p>The <strong>Stark Wand</strong> allows you to interact with the molecule using an external point charge (an "Ion"). 
+- <strong>The Science:</strong> This demonstrates the <strong>Stark Effect</strong>. When an external electric field (from your Wand) is applied, the molecular orbitals polarize.
+- <strong>The Interaction:</strong> Enable the wand in the sidebar and use the X, Y, Z sliders to move it around the molecule. Use the <strong>Charge (<span class="arithmatex">\(q\)</span>)</strong> slider to change its intensity.
+- <strong>What to look for:</strong> Watch the Highest Occupied Molecular Orbital (HOMO) of Water "reach out" to touch a positive charge or "recoil" from a negative one.</p>
+<h3 id="2-the-quantum-hum">2. The Quantum Hum</h3>
+<p>The <strong>Quantum Hum</strong> is a data sonification tool that turns the energy of the system into sound.
+- <strong>The Science:</strong> Every quantum state has an associated energy. We map this energy value to an audible frequency.
+- <strong>The Interaction:</strong> Enable the hum in the sidebar. Every time the system recalculates, a brief "hum" will play. 
+- <strong>What to look for:</strong> As you move the Stark Wand or change the bond distance, notice how the <strong>pitch</strong> of the hum shifts. This provides an auditory "feel" for the stability of the quantum system.</p>
+<h3 id="3-reality-check-dissociation-paradox">3. Reality Check: Dissociation Paradox</h3>
+<p>The <strong>Reality Check</strong> feature demonstrates where the standard mathematical approximations in quantum chemistry physically fail.
+- <strong>The Pathological Case:</strong> Select <strong><span class="arithmatex">\(H_2\)</span></strong> and enable <strong>Reality Check</strong>.
+- <strong>The Paradox Plot:</strong> A graph will appear showing the energy of the molecule as you stretch it. 
+    - <strong>Restricted (RHF)</strong> energy (our default) skyrockets as the bond breaks. This is impossible!
+    - <strong>Unrestricted (UHF)</strong> energy correctly levels off.
+- <strong>What to look for:</strong> Stretch the <span class="arithmatex">\(H_2\)</span> bond distance beyond 2.0 Å. In the 3D view, you will see a warning. In the <strong>Restricted</strong> state, the math is forcing the two electrons to stay "smeared out" across both atoms even when they are miles apart. This is a purely mathematical artifact called <strong>Static Correlation Error</strong>.</p>
 
 
 
