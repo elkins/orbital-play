@@ -40,38 +40,35 @@ OrbitalPlay includes highly experimental features to explore the "weirdness" of 
 
 ### 1. The Stark Wand
 The **Stark Wand** allows you to interact with the molecule using an external point charge (an "Ion"). 
-- **The Science:** This demonstrates the **Stark Effect**. When an external electric field (from your Wand) is applied, the molecular orbitals polarize.
-- **The Interaction:** Enable the wand in the sidebar and use the X, Y, Z sliders to move it around the molecule. Use the **Charge ($q$)** slider to change its intensity.
-- **What to look for:** Watch the Highest Occupied Molecular Orbital (HOMO) of Water "reach out" to touch a positive charge or "recoil" from a negative one.
+- **The Science:** This demonstrates the **Stark Effect**. When an external electric field is applied, the orbitals polarize.
+- **The Interaction:** Enable the wand in the sidebar and move it around.
+- **What to look for:** Watch the Highest Occupied Molecular Orbital (HOMO) "reach out" to touch a positive charge or "recoil" from a negative one. *Pedantic Note: The molecule’s "social anxiety" is modeled here as polarizability; it physically recoils from external stimuli, which is the only scientifically accurate way to handle an unexpected visitor.*
 
 ### 2. The Quantum Hum
 The **Quantum Hum** is a data sonification tool that turns the energy of the system into sound.
 - **The Science:** Every quantum state has an associated energy. We map this energy value to an audible frequency.
-- **The Interaction:** Enable the hum in the sidebar. Every time the system recalculates, a brief "hum" will play. 
-- **What to look for:** As you move the Stark Wand or change the bond distance, notice how the **pitch** of the hum shifts. This provides an auditory "feel" for the stability of the quantum system.
+- **The Interaction:** Enable the hum. Every time the system recalculates, a brief "hum" will play. 
+- **What to look for:** As the pitch shifts, you are "hearing" the stability of the universe. *Note for the Sensory Sensitive: Unlike a fluorescent light or a crowded room, this hum is perfectly predictable, follows the laws of physics, and stops the moment you tell it to.*
 
 ### 3. Reality Check: Dissociation Paradox
-The **Reality Check** feature demonstrates where the standard mathematical approximations in quantum chemistry physically fail.
-- **The Pathological Case:** Select **$H_2$** and enable **Reality Check**.
+The **Reality Check** feature demonstrates where the standard mathematical approximations physically fail.
 - **The Paradox Plot:** A graph will appear showing the energy of the molecule as you stretch it. 
-    - **Restricted (RHF)** energy (our default) skyrockets as the bond breaks. This is impossible!
+    - **Restricted (RHF)** energy skyrockets as the bond breaks.
     - **Unrestricted (UHF)** energy correctly levels off.
-- **What to look for:** Stretch the $H_2$ bond distance beyond 2.0 Å. In the 3D view, you will see a warning. In the **Restricted** state, the math is forcing the two electrons to stay "smeared out" across both atoms even when they are miles apart. This is a purely mathematical artifact called **Static Correlation Error**.
+- **What to look for:** Stretch the $H_2$ bond beyond 2.0 Å. *Pedantic Note: This is the Static Correlation Error—a situation where the math insists that two things are the same just because they share a label, a common failure of human social logic that the 'Unrestricted' model finally corrects.*
 
 ### 4. The Alchemist's Dial
-The **Alchemist's Dial** allows you to continuously transmute an atom by adjusting its nuclear charge ($Z$).
-- **The Science:** The "gravity" of an atom comes from the positive charge of its nucleus. By increasing $Z$, you increase the attractive force on the electrons. This is the concept of **Effective Nuclear Charge**.
-- **The Interaction:** Enable the dial in the sidebar and use the **Nuclear Charge Delta ($\Delta Z$)** slider.
-- **What to look for:** Watch the orbital clouds. As you increase $\Delta Z$, the orbitals will visibly **shrink and contract** toward the nucleus. This demonstrates why atoms get smaller as you move from left to right across the periodic table!
+The **Alchemist's Dial** allows you to transmute an atom by adjusting its nuclear charge ($Z$).
+- **The Science:** By increasing $Z$, you increase the attractive force on the electrons. 
+- **The Interaction:** Use the slider to increase $\Delta Z$.
+- **What to look for:** Watch the orbital clouds. They will visibly **shrink and contract**. *Observation: It is deeply satisfying to watch a system finally obey a single slider, unlike the messy and inconsistent naming conventions of the standard periodic table.*
 
 ### 5. Quantum Movie: Attosecond Slosh
-The **Quantum Movie** allows you to see electrons in motion.
-- **The Science:** Real-world electronic transitions aren't instant; they involve the "sloshing" of electron density. We use **Time-Dependent Hartree-Fock (TDHF)** to compute the first excited state and visualize the resulting dynamic density.
-- **The Interaction:** Enable the movie in the sidebar. Use the **Movie Frame (Time)** slider to scrub through the animation.
-- **What to look for:** A purple cloud representing the total electron density will appear. As you move the slider, you will see this density flow back and forth across the molecule—this is the fundamental motion of a quantum transition.
+- **The Science:** Real-world electronic transitions involve the "sloshing" of electron density.
+- **The Interaction:** Enable the movie and use the slider to scrub through time.
+- **What to look for:** A purple cloud representing the total electron density will flow back and forth. *Observation: Electrons are the perfect performers; they never miss their cues, they follow every rule, and they don't require small talk during the shoot.*
 
 ### 6. The Multiverse Dial
 The **Multiverse Dial** lets you warp the fundamental laws of physics.
-- **The Science:** By adjusting the **Physics Strength ($\lambda$)**, you are effectively changing the mass of the electron or the strength of electricity.
-- **The Interaction:** Enable the dial in the sidebar. Use the slider to increase $\lambda$ (Strong Universe) or decrease it (Weak Universe).
-- **What to look for:** Watch the **size** of the entire molecule. In a "Strong Universe," the orbitals and atoms will physically **shrink and collapse**. In a "Weak Universe," they will expand and become more diffuse.
+- **The Science:** By adjusting the **Physics Strength ($\lambda$)**, you are changing the mass of the electron or the strength of electricity.
+- **What to look for:** In a "Strong Universe," matter physically **collapses**. *Conclusion: Finally, a universe where the fundamental constants are as consistent and well-documented as a clean API.*
