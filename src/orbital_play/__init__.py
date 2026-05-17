@@ -6,4 +6,4 @@ from .engine import (
 )
 from .visualize import show_orbital
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
