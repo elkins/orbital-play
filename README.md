@@ -2,9 +2,16 @@
 
 Interactive Molecular Orbital Education. Solve the Schrödinger equation for simple molecules in real-time and visualize the resulting orbitals.
 
-📚 **[Full Documentation](https://elkins.github.io/orbital-play/)** | 🚀 **[Interactive Tutorial](https://colab.research.google.com/github/elkins/orbital-play/blob/main/notebooks/01_The_Hydrogen_Bond.ipynb)**
+📚 **[Full Documentation](https://elkins.github.io/orbital-play/)**
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/orbital-play/blob/main/notebooks/01_The_Hydrogen_Bond.ipynb)
+## Interactive Tutorials
+
+Explore the quantum world through guided Jupyter notebooks.
+
+| Tutorial | Description | Link |
+| :--- | :--- | :--- |
+| **01: The Hydrogen Bond** | Discover the simplest chemical bond and the nature of bonding/anti-bonding orbitals. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/orbital-play/blob/main/notebooks/01_The_Hydrogen_Bond.ipynb) |
+| **02: VSEPR and Hybridization** | Visualize why molecules have specific shapes and how lone pairs "push" other orbitals. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/orbital-play/blob/main/notebooks/02_VSEPR_and_Hybridization.ipynb) |
 
 ## What is OrbitalPlay?
 
