@@ -15,7 +15,7 @@ Calculations are performed in real-time using Hartree-Fock theory (STO-3G basis)
 # Sidebar for controls
 st.sidebar.header("Molecular Geometry")
 
-molecule_type = st.sidebar.selectbox("Select Molecule", ["H2", "H2O", "CH4", "OH (Radical)"])
+molecule_type = st.sidebar.selectbox("Select Molecule", ["H2", "H2O", "NH3", "CH4", "CO2", "C2H4", "OH (Radical)"])
 spin = 0
 
 if molecule_type == "H2":
@@ -27,9 +27,24 @@ elif molecule_type == "H2O":
     angle = st.sidebar.slider("H-O-H Angle (degrees)", 80.0, 120.0, 104.5, 0.5)
     geometry = engine.generate_geometry("H2O", dist=dist, angle=angle)
 
+elif molecule_type == "NH3":
+    dist = st.sidebar.slider("N-H Bond Distance (Å)", 0.8, 1.5, 1.01, 0.01)
+    angle = st.sidebar.slider("H-N-H Angle (degrees)", 90.0, 120.0, 106.7, 0.5)
+    geometry = engine.generate_geometry("NH3", dist=dist, angle=angle)
+
 elif molecule_type == "CH4":
     dist = st.sidebar.slider("C-H Bond Distance (Å)", 0.8, 1.5, 1.09, 0.01)
     geometry = engine.generate_geometry("CH4", dist=dist)
+
+elif molecule_type == "CO2":
+    dist = st.sidebar.slider("C-O Bond Distance (Å)", 1.0, 1.5, 1.16, 0.01)
+    geometry = engine.generate_geometry("CO2", dist=dist)
+
+elif molecule_type == "C2H4":
+    dist_cc = st.sidebar.slider("C=C Bond Distance (Å)", 1.1, 1.6, 1.34, 0.01)
+    dist_ch = st.sidebar.slider("C-H Bond Distance (Å)", 0.9, 1.3, 1.08, 0.01)
+    angle = st.sidebar.slider("H-C-H Angle (degrees)", 100.0, 140.0, 121.3, 0.5)
+    geometry = engine.generate_geometry("C2H4", dist_cc=dist_cc, dist_ch=dist_ch, angle=angle)
 
 elif molecule_type == "OH (Radical)":
     dist = st.sidebar.slider("O-H Bond Distance (Å)", 0.5, 2.0, 0.97, 0.01)

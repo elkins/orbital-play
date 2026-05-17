@@ -45,6 +45,22 @@ def test_generate_geometry_oh():
     assert "O 0 0 0" in geo
     assert "H 0 0 0.97" in geo
 
+def test_generate_geometry_nh3():
+    geo = engine.generate_geometry("NH3", dist=1.0, angle=109.5)
+    assert "N 0 0 0" in geo
+    assert geo.count("H") == 3
+
+def test_generate_geometry_co2():
+    geo = engine.generate_geometry("CO2", dist=1.16)
+    assert "C 0 0 0" in geo
+    assert "O 0 0 1.16" in geo
+    assert "O 0 0 -1.16" in geo
+
+def test_generate_geometry_c2h4():
+    geo = engine.generate_geometry("C2H4", dist_cc=1.34, dist_ch=1.08)
+    assert geo.count("C") == 2
+    assert geo.count("H") == 4
+
 def test_run_calculation_uhf():
     # OH radical, spin=1
     geometry = "O 0 0 0; H 0 0 0.97"

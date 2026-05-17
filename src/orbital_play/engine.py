@@ -34,6 +34,41 @@ def generate_geometry(molecule_type, **kwargs):
         dist = kwargs.get('dist', 0.97)
         return f"O 0 0 0; H 0 0 {dist}"
     
+    elif molecule_type == "NH3":
+        dist = kwargs.get('dist', 1.01)
+        angle = kwargs.get('angle', 106.7)
+        # Convert H-N-H angle to angle between N-H and symmetry axis
+        # cos(alpha) = 1.5 * cos^2(beta) - 0.5
+        rad_alpha = np.radians(angle)
+        cos_beta = np.sqrt((np.cos(rad_alpha) + 0.5) / 1.5)
+        sin_beta = np.sqrt(1.0 - cos_beta**2)
+        
+        z = -dist * cos_beta
+        r_xy = dist * sin_beta
+        
+        return (f"N 0 0 0; "
+                f"H {r_xy} 0 {z}; "
+                f"H {-r_xy*0.5} {r_xy*np.sqrt(3)/2} {z}; "
+                f"H {-r_xy*0.5} {-r_xy*np.sqrt(3)/2} {z}")
+
+    elif molecule_type == "CO2":
+        dist = kwargs.get('dist', 1.16)
+        return f"C 0 0 0; O 0 0 {dist}; O 0 0 {-dist}"
+
+    elif molecule_type == "C2H4":
+        dist_cc = kwargs.get('dist_cc', 1.34)
+        dist_ch = kwargs.get('dist_ch', 1.08)
+        angle = kwargs.get('angle', 121.3) # H-C-H angle
+        
+        rad = np.radians(angle)
+        x = dist_ch * np.sin(rad/2)
+        z_h = dist_ch * np.cos(rad/2)
+        z_c = dist_cc / 2
+        
+        return (f"C 0 0 {z_c}; C 0 0 {-z_c}; "
+                f"H {x} 0 {z_c + z_h}; H {-x} 0 {z_c + z_h}; "
+                f"H {x} 0 {-z_c - z_h}; H {-x} 0 {-z_c - z_h}")
+
     else:
         raise ValueError(f"Unsupported molecule type: {molecule_type}")
 
