@@ -11,7 +11,11 @@ Explore the quantum world through guided Jupyter notebooks.
 | Tutorial | Description | Link |
 | :--- | :--- | :--- |
 | **01: The Hydrogen Bond** | Discover the simplest chemical bond and the nature of bonding/anti-bonding orbitals. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/orbital-play/blob/main/notebooks/01_The_Hydrogen_Bond.ipynb) |
-| **02: VSEPR and Hybridization** | Visualize why molecules have specific shapes and how lone pairs "push" other orbitals. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/orbital-play/blob/main/notebooks/02_VSEPR_and_Hybridization.ipynb) |
+| **02: VSEPR and Hybridization** | Visualize why molecules have specific shapes and how lone pairs \"push\" other orbitals. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/orbital-play/blob/main/notebooks/02_VSEPR_and_Hybridization.ipynb) |
+| **03: The Art of the Pi-Bond** | Explore double bonds in Ethylene and CO2. See the electron clouds that drive organic chemistry. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/orbital-play/blob/main/notebooks/03_The_Art_of_the_Pi_Bond.ipynb) |
+| **04: Molecular Polarization** | Use the \"Stark Wand\" to warp orbitals and visualize the physical basis of Intermolecular Forces. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/orbital-play/blob/main/notebooks/04_Molecular_Polarization.ipynb) |
+| **05: Attosecond Dynamics** | Visualize electron \"sloshing\" in real-time. A guide to the 2023 Nobel Prize in Physics. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins/orbital-play/blob/main/notebooks/05_Attosecond_Dynamics.ipynb) |
+
 
 ## What is OrbitalPlay?
 
