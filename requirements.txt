@@ -3,6 +3,7 @@ pyscf
 py3Dmol
 stmol
 numpy
+ipywidgets>=7.7.1
 pytest
 pytest-mock
 ipython_genutils
