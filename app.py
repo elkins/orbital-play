@@ -57,9 +57,30 @@ use_wand = st.sidebar.checkbox("The Stark Wand", value=False, help="Interact wit
 wand_pos = None
 wand_charge = 0.0
 if use_wand:
-    wx = st.sidebar.slider("Wand X (Å)", -5.0, 5.0, 2.0, 0.1)
-    wy = st.sidebar.slider("Wand Y (Å)", -5.0, 5.0, 0.0, 0.1)
-    wz = st.sidebar.slider("Wand Z (Å)", -5.0, 5.0, 0.0, 0.1)
+    wand_mode = st.sidebar.radio("Wand Mode", ["Manual", "Trajectory"], horizontal=True)
+    if wand_mode == "Manual":
+        wx = st.sidebar.slider("Wand X (Å)", -5.0, 5.0, 2.0, 0.1)
+        wy = st.sidebar.slider("Wand Y (Å)", -5.0, 5.0, 0.0, 0.1)
+        wz = st.sidebar.slider("Wand Z (Å)", -5.0, 5.0, 0.0, 0.1)
+    else:
+        traj_type = st.sidebar.selectbox("Select Trajectory", ["Circle", "X-Sweep", "Y-Sweep", "Z-Sweep"])
+        progress = st.sidebar.slider("Progress (t)", 0.0, 1.0, 0.0, 0.01)
+        
+        if traj_type == "Circle":
+            angle = 2 * np.pi * progress
+            wx = 3.0 * np.cos(angle)
+            wy = 3.0 * np.sin(angle)
+            wz = 0.0
+        elif traj_type == "X-Sweep":
+            wx = -5.0 + 10.0 * progress
+            wy, wz = 0.0, 0.0
+        elif traj_type == "Y-Sweep":
+            wy = -5.0 + 10.0 * progress
+            wx, wz = 0.0, 0.0
+        elif traj_type == "Z-Sweep":
+            wz = -5.0 + 10.0 * progress
+            wx, wy = 0.0, 0.0
+        
     wand_pos = (wx, wy, wz)
     wand_charge = st.sidebar.slider("Wand Charge (q)", -2.0, 2.0, 1.0, 0.1)
 

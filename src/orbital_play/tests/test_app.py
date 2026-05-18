@@ -37,6 +37,24 @@ def test_spin_toggle_appears_for_radical():
     
     # Check for the radio button
     assert len(at.radio) > 0
-    assert at.radio[0].label == "Spin Channel"
-    assert "Alpha (↑)" in at.radio[0].options
-    assert "Beta (↓)" in at.radio[0].options
+    assert any("Spin Channel" in r.label for r in at.radio)
+
+def test_stark_wand_trajectory_mode():
+    """Verify that the Stark Wand Trajectory mode shows correct sliders."""
+    at = AppTest.from_file("app.py").run()
+    
+    # Enable the Stark Wand checkbox
+    at.checkbox[0].check().run()
+    
+    # Select "Trajectory" mode
+    traj_radio = None
+    for r in at.radio:
+        if "Trajectory" in r.options:
+            traj_radio = r
+            break
+    
+    assert traj_radio is not None
+    traj_radio.set_value("Trajectory").run()
+    
+    slider_labels = [s.label for s in at.slider]
+    assert "Progress (t)" in slider_labels

@@ -41,7 +41,7 @@ OrbitalPlay includes highly experimental features to explore the "weirdness" of 
 ### 1. The Stark Wand
 The **Stark Wand** allows you to interact with the molecule using an external point charge (an "Ion"). 
 - **The Science:** This demonstrates the **Stark Effect**. When an external electric field is applied, the orbitals polarize.
-- **The Interaction:** Enable the wand in the sidebar and move it around.
+- **The Interaction:** Enable the wand in the sidebar. You can move it manually using X, Y, Z sliders, or switch to **Orbit Mode** to sweep the charge around the molecule in a circular path.
 - **What to look for:** Watch the Highest Occupied Molecular Orbital (HOMO) "reach out" to touch a positive charge or "recoil" from a negative one. *Pedantic Note: The molecule’s "social anxiety" is modeled here as polarizability; it physically recoils from external stimuli, which is the only scientifically accurate way to handle an unexpected visitor.*
 
 ### 2. The Quantum Hum
